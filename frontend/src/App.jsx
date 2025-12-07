@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/todos");
+        const response = await axios.get("/api/todos");
         setTodos(response.data);
       } catch (error) {
         console.log("Error fetching todos:", error);
@@ -23,7 +23,7 @@ function App() {
     e.preventDefault();
     if (!newTodo.trim()) return;
     try {
-      const response = await axios.post("http://localhost:5000/api/todos", {
+      const response = await axios.post("/api/todos", {
         title: newTodo,
       });
       setTodos([...todos, response.data]);
@@ -35,7 +35,7 @@ function App() {
 
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/todos/${id}`);
+      await axios.delete(`/api/todos/${id}`);
       setTodos(todos.filter((todo) => todo._id !== id));
     } catch (error) {
       console.log("Error while deleting Todo:", error);
@@ -45,7 +45,7 @@ function App() {
   const toggleDone = async (id, currentDone) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/todos/${id}`,
+        `/api/todos/${id}`,
         { done: !currentDone }
       );
       setTodos(todos.map((todo) => (todo._id === id ? response.data : todo)));
@@ -68,7 +68,7 @@ function App() {
     if (!editedTitle.trim()) return;
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/todos/${id}`,
+        `/api/todos/${id}`,
         { title: editedTitle }
       );
       setTodos(todos.map((todo) => (todo._id === id ? response.data : todo)));
